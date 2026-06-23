@@ -1,251 +1,528 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TMassiveXO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Tab Icon.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Modern Design System --- */
+        :root {
+            --bg-main: #030712;       /* Near obsidian black for maximum neon pop */
+            --bg-card: rgba(10, 15, 30, 0.65); /* Sharp translucent glass card */
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f9fafb;     /* Ultra crisp off-white */
+            --text-muted: #9ca3af;    /* Soft gray */
+            
+            /* High-end Neon Accents */
+            --accent-start: #6366f1;  /* Cyber Indigo */
+            --accent-end: #d946ef;    /* Electric Magenta */
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  <style>
-    :root {
-      --neon: #00f7ff;
-      --pink: #ff2cdf;
-      --dark: #0a0a0f;
-      --card: #111118;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 40px 20px;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
+        /* --- IMMERSIVE VISUAL BACKGROUND SYSTEM --- */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #030712, #080518);
+        }
 
-    body {
-      background: radial-gradient(circle at top, #111 0%, #000 60%);
-      color: #fff;
-      min-height: 100vh;
-    }
+        /* Interactive Canvas for Rotating Geometric Cubes */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.75; /* Increased canvas visibility */
+        }
 
-    /* NAVBAR */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 60px;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--neon);
-    }
+        /* Highly Noticeable Pulsing Cosmic Orbs */
+        .nebula-indigo {
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70vw;
+            height: 70vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
+            animation: cosmicPulse 25s infinite alternate ease-in-out;
+            filter: blur(40px);
+        }
 
-    header h1 {
-      color: var(--neon);
-      text-shadow: 0 0 10px var(--neon);
-    }
+        .nebula-magenta {
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 75vw;
+            height: 75vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 70, 239, 0.16) 0%, transparent 70%);
+            animation: cosmicPulse 30s infinite alternate-reverse ease-in-out;
+            filter: blur(40px);
+        }
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 30px;
-      position: relative;
-    }
+        @keyframes cosmicPulse {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(6vw, -4vh) scale(1.15); opacity: 1; }
+            100% { transform: translate(-3vw, 5vh) scale(0.9); opacity: 0.7; }
+        }
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--pink);
-      transition: 0.3s;
-    }
+        /* --- Main Content Layout --- */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
 
-    nav a:hover::after {
-      width: 100%;
-    }
+        /* --- Premium Glassmorphism Cards --- */
+        section, header.hero {
+            background: var(--bg-card);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 32px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    /* HERO */
-    .hero {
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
+        section:hover {
+            border-color: rgba(217, 70, 239, 0.35);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15), 0 20px 50px -15px rgba(0, 0, 0, 0.8);
+            transform: translateY(-3px) scale(1.01);
+        }
 
-    /* GLITCH TEXT */
-    .glitch {
-      position: relative;
-      font-size: 3rem;
-      color: var(--neon);
-      text-shadow: 0 0 15px var(--neon);
-    }
+        /* --- Premium Square Profile Image Styling --- */
+        .profile-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px auto;
+            background: var(--bg-main);
+            padding: 4px; /* Space creating the border gap */
+            border-radius: var(--radius-md); /* Consistent geometric corner rounding */
+            box-sizing: border-box;
+        }
 
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-    }
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: calc(var(--radius-md) - 4px); /* Scales corners inward smoothly */
+            object-fit: cover; 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
 
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 var(--pink);
-      animation: glitchTop 2s infinite linear alternate-reverse;
-    }
+        /* High-intensity neon frame behind the photo */
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            border-radius: var(--radius-md);
+            z-index: 1;
+            opacity: 0.9;
+            filter: blur(2px); /* Crisp, radiant geometric outline glow */
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+        }
 
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 #00ff99;
-      animation: glitchBottom 1.5s infinite linear alternate-reverse;
-    }
+        /* --- Typography Headings --- */
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #ffffff, #d1d5db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
 
-    @keyframes glitchTop {
-      0% { clip: rect(0, 9999px, 0, 0); }
-      10% { clip: rect(10px, 9999px, 40px, 0); }
-      20% { clip: rect(85px, 9999px, 140px, 0); }
-      100% { clip: rect(0, 9999px, 0, 0); }
-    }
+        /* --- Hero Header Style --- */
+        header.hero {
+            text-align: center;
+            padding: 50px 30px 65px 30px; /* Shifted top padding to balance photo inclusion */
+        }
 
-    @keyframes glitchBottom {
-      0% { clip: rect(0, 9999px, 0, 0); }
-      10% { clip: rect(50px, 9999px, 90px, 0); }
-      20% { clip: rect(20px, 9999px, 60px, 0); }
-      100% { clip: rect(0, 9999px, 0, 0); }
-    }
+        header.hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .hero p {
-      max-width: 600px;
-      margin: auto;
-      opacity: 0.8;
-    }
+        header.hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto 28px auto;
+            font-weight: 300;
+        }
 
-    .hero button {
-      margin-top: 30px;
-      padding: 15px 40px;
-      font-size: 1rem;
-      color: #000;
-      background: linear-gradient(90deg, var(--neon), var(--pink));
-      border: none;
-      cursor: pointer;
-      border-radius: 30px;
-      box-shadow: 0 0 20px var(--neon);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
 
-    .hero button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 35px var(--pink);
-    }
+        .social-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s, transform 0.2s;
+        }
 
-    /* GAMES */
-    .games {
-      padding: 80px 60px;
-    }
+        .social-links a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
 
-    .games h3 {
-      text-align: center;
-      margin-bottom: 50px;
-      font-size: 2.2rem;
-      color: var(--neon);
-    }
+        /* --- Content Blocks --- */
+        .bio-text {
+            font-weight: 300;
+            color: #e5e7eb;
+        }
 
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
 
-    .game-card {
-      background: var(--card);
-      border-radius: 15px;
-      padding: 25px;
-      border: 1px solid transparent;
-      transition: 0.4s;
-    }
+        .timeline-item {
+            padding: 22px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-md);
+            transition: background 0.2s, border-color 0.2s;
+        }
 
-    .game-card:hover {
-      border-color: var(--pink);
-      box-shadow: 0 0 25px var(--pink);
-      transform: translateY(-10px);
-    }
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.07);
+        }
 
-    .game-card h4 {
-      margin-bottom: 10px;
-      color: var(--pink);
-    }
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
 
-    .game-card p {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #000;
-      border-top: 1px solid var(--neon);
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
-  </style>
+        .timeline-date {
+            font-size: 0.8rem;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* --- Interactive Technology Tags --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.03);
+            color: #e5e7eb;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(217, 70, 239, 0.15));
+            border-color: var(--accent-end);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 70, 239, 0.1);
+        }
+
+        /* --- Call To Action Section --- */
+        .contact-box {
+            text-align: center;
+            position: relative;
+        }
+        
+        .contact-box p {
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: #ffffff;
+            padding: 14px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+            box-shadow: 0 4px 25px rgba(99, 102, 241, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(217, 70, 239, 0.5);
+        }
+
+        /* --- Footer Style --- */
+        footer {
+            text-align: center;
+            padding: 20px 0 40px 0;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.02em;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 600px) {
+            body { padding: 20px 12px; }
+            section, header.hero { padding: 32px 20px; margin-bottom: 20px; }
+            header.hero h1 { font-size: 2.4rem; }
+            .timeline-header { flex-direction: column; gap: 2px; }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>TMassive</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Games</a>
-      <a href="#">Community</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div>
-      <h2 class="glitch" data-text="Enter the World of Innovation">
-        Enter the World of Innovation
-      </h2>
-      <p>Experience Next-Gen Innovation</p>
-      <button onclick="playNow()">EXPLORE NOW</button>
+    <div class="bg-wrapper">
+        <div class="nebula-indigo"></div>
+        <div class="nebula-magenta"></div>
+        <canvas id="particleCanvas"></canvas>
     </div>
-  </section>
 
-  <section class="games">
-    <h3>Featured Games</h3>
-    <div class="game-grid">
-      <div class="game-card">
-        <h4>Cyber Strike</h4>
-        <p>Fast-paced FPS combat in a neon-lit dystopian city.</p>
-      </div>
-      <div class="game-card">
-        <h4>Void Racers</h4>
-        <p>High-speed futuristic racing across alien worlds.</p>
-      </div>
-      <div class="game-card">
-        <h4>Mech Arena</h4>
-        <p>Build, customize, and battle massive war machines.</p>
-      </div>
+    <div class="container">
+
+        <header class="hero">
+            <div class="profile-container">
+                <img src="Profile.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+
+            <h1>Your Name</h1>
+            <p>Your Profession / Passion (e.g., Full Stack Developer & UI Designer building seamless digital experiences.)</p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="mailto:your.email@example.com">Email</a>
+            </div>
+        </header>
+
+        <section id="about">
+            <h2>About</h2>
+            <p class="bio-text">Provide a punchy, 2-3 sentence overview of what you do best. Focus on the impact you make and what drives you professionally. Think of this as your elevator pitch to future employers or collaborators.</p>
+        </section>
+
+        <section id="achievements">
+            <h2>Featured Achievements</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Lead Role or Key Initiative</span>
+                        <span class="timeline-date">2025 — Present</span>
+                    </div>
+                    <div class="timeline-desc">Describe a major responsibility or accomplishment. Mention specific tools used or a notable percentage of growth/success you generated.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Major Project Launch / Award</span>
+                        <span class="timeline-date">2024</span>
+                    </div>
+                    <div class="timeline-desc">Talk about a standout achievement—winning a hackathon, earning an elite certification, or shipping a product that people actually used.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Core Milestone Accomplished</span>
+                        <span class="timeline-date">2023</span>
+                    </div>
+                    <div class="timeline-desc">A foundational milestone, such as graduating with honors, entering your industry, or stepping up into a major new territory of work.</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Stack & Core Competencies</h2>
+            <div class="skills-grid">
+                <span class="skill-tag">JavaScript / TypeScript</span>
+                <span class="skill-tag">UI/UX Design</span>
+                <span class="skill-tag">Data Optimization</span>
+                <span class="skill-tag">System Architecture</span>
+                <span class="skill-tag">Technical Writing</span>
+                <span class="skill-tag">Agile Frameworks</span>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-box">
+                <h2>Let's Connect</h2>
+                <p>Have an interesting project, job opportunity, or just want to chat? My inbox is always open.</p>
+                <a href="mailto:your.email@example.com" class="btn">Reach Out</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Your Name. Crafted with care.</p>
+        </footer>
+
     </div>
-  </section>
 
-  <footer>
-    © 2025 NeonX Gaming. All rights reserved.
-  </footer>
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
 
-  <script>
-    function playNow() {
-      alert("Launching game servers...");
-    }
-  </script>
+        let cubesArray = [];
+        const numberOfCubes = 24; 
 
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initCubes();
+        });
+
+        class Cube {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                
+                this.size = Math.random() * 35 + 35; 
+                this.speedX = Math.random() * 0.08 - 0.04;
+                this.speedY = Math.random() * -0.15 - 0.05; 
+                
+                this.angle = Math.random() * Math.PI * 2;
+                this.rotationSpeed = Math.random() * 0.006 - 0.003;
+                
+                this.baseAlpha = Math.random() * 0.2 + 0.4; 
+                this.alpha = this.baseAlpha;
+                this.pulseSpeed = Math.random() * 0.015 + 0.005;
+                this.pulseAngle = Math.random() * Math.PI;
+                
+                this.glowColor = Math.random() > 0.5 ? '#6366f1' : '#d946ef';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.angle += this.rotationSpeed;
+
+                this.pulseAngle += this.pulseSpeed;
+                this.alpha = this.baseAlpha + Math.sin(this.pulseAngle) * 0.1;
+
+                if (this.y < -this.size * 2) {
+                    this.y = canvas.height + this.size * 2;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x < -this.size * 2 || this.x > canvas.width + this.size * 2) {
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.globalAlpha = Math.max(0.2, this.alpha);
+                
+                ctx.strokeStyle = this.glowColor;
+                ctx.lineWidth = 3.0; 
+                ctx.shadowBlur = 15; 
+                ctx.shadowColor = this.glowColor;
+
+                ctx.fillStyle = 'rgba(3, 7, 18, 0.85)'; 
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                
+                ctx.strokeRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                
+                ctx.restore();
+            }
+        }
+
+        function initCubes() {
+            cubesArray = [];
+            for (let i = 0; i < numberOfCubes; i++) {
+                cubesArray.push(new Cube());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < cubesArray.length; i++) {
+                cubesArray[i].update();
+                cubesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        initCubes();
+        animate();
+    </script>
 </body>
 </html>
